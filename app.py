@@ -8,7 +8,7 @@ st.set_page_config(page_title="MMO 2025 Hesapla", page_icon=LOGO_URL)
 
 # Logo Gösterimi
 st.image(LOGO_URL, width=120)
-st.title("MMO 2025 Proje Hesaplama")
+st.title("")
 
 # --- VERİ TABLOSU (Tam Hassas Fiyatlar) ---
 PRICE_TABLE = {
