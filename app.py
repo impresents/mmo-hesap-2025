@@ -47,8 +47,8 @@ def get_interpolated_price(area, class_idx):
 # --- GİRDİLER ---
 area = st.number_input("İnşaat Alanı (m²)", value=1000, step=1)
 cls = st.selectbox("Yapı Sınıfı", CLASSES, index=2)
-tips = st.number_input("Bina Adedi (Boş = 1)", value=1, min_value=1)
-discount_pct = st.slider("İndirim Yüzdesi (%)", min_value=0, max_value=100, value=0)
+tips = st.number_input("Bina Adedi", value=1, min_value=1)
+discount_pct = st.slider("İndirim Oranı (%)", min_value=0, max_value=100, value=0)
 
 if st.button("HESAPLA", use_container_width=True):
     table_price = get_interpolated_price(area, CLASSES.index(cls))
@@ -62,9 +62,9 @@ if st.button("HESAPLA", use_container_width=True):
     st.divider()
     c_left, c_right = st.columns(2)
     with c_left:
-        st.metric("Ruhsat Brüt (%50)", f"{round(r_brut):,} TL")
+        st.metric("Ruhsat", f"{round(r_brut):,} TL")
     with c_right:
-        st.metric("Uygulama Brüt (%100)", f"{round(u_brut):,} TL")
+        st.metric("Uygulama", f"{round(u_brut):,} TL")
 
     st.markdown("### 🔹 İndirimli Sonuçlar (KDV Dahil)")
     
@@ -82,8 +82,8 @@ st.markdown(
     """
     <div style='text-align: center; color: gray; font-size: 0.8em;'>
         Bu program <b>Mehmet SUNAR</b> tarafından hazırlanmıştır.<br>
-        Hesaplamalar bilgilendirme amaçlıdır; resmi işlemlerde MMO verileri esastır.<br>
-        Hesaplamalardan kaynaklanabilecek hatalardan sorumluluk kabul edilmez.
+        Hesaplamalar Bilgilendirme Amaçlıdır; Resmi İşlemlerde MMO Verileri Esastır.<br>
+        Hesaplamalardan Kaynaklanabilecek Hatalardan Sorumluluk Kabul Edilmez.
     </div>
     """, 
     unsafe_allow_html=True
