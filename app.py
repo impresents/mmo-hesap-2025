@@ -70,7 +70,7 @@ if st.button("HESAPLA", use_container_width=True):
     
     matrah_r = round(r_brut * pay_ratio)
     kdv_r = round(matrah_r * 0.2)
-    st.info(f"**RUHSAT PROJE BEDELİ**\n\nMatrah: {matrah_r:,} TL  |  KDV: {kdv_r:,} TL\n\n**TOPLAM: {matrah_r + kdv_r:,} TL**")
+    st.info(f"**RUHSAT PROJE BEDELİ**\n\nFiyat: {matrah_r:,} TL  |  KDV: {kdv_r:,} TL\n\n**TOPLAM: {matrah_r + kdv_r:,} TL**")
 
     matrah_u = round(u_brut * pay_ratio)
     kdv_u = round(matrah_u * 0.2)
