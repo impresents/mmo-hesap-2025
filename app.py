@@ -1,7 +1,8 @@
 import streamlit as st
 
 # --- LOGO VE SAYFA AYARLARI ---
-LOGO_URL = "https://i.ibb.co/DPSdttSv/mmo-logo-mini-1.png"
+# Sizin gönderdiğiniz logonun doğrudan linki
+LOGO_URL = "https://makina.mmo.org.tr/assets/img/logo1.png"
 
 st.set_page_config(
     page_title="MMO 2025 Hesapla", 
@@ -10,14 +11,15 @@ st.set_page_config(
 )
 
 # --- ÜST BÖLÜM: LOGO VE BAŞLIK ---
-col1, col2, col3 = st.columns([1, 2, 1])
-with col2:
+# Logoyu tam ortalamak için kolon kullanıyoruz
+c1, c2, c3 = st.columns([1, 2, 1])
+with c2:
     st.image(LOGO_URL, use_container_width=True)
 
-st.markdown("<h2 style='text-align: center;'>MMO 2025 Proje Hesaplama</h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center; color: #333;'>MMO 2025 Proje Hesaplama</h2>", unsafe_allow_html=True)
 st.divider()
 
-# --- VERİ TABLOSU (Tam Hassas Fiyatlar) ---
+# --- VERİ TABLOSU (Tam Hassas Fiyatlar - Kitap1.xlsx'ten) ---
 PRICE_TABLE = {
     250: [18026.25, 62857.5, 117348.75, 124897.5, 184093.75, 235468.75, 279137.5, 284230.0, 294145.0, 326368.75, 358592.5],
     300: [21186.0, 74052.0, 138510.0, 147420.0, 192210.0, 245850.0, 291444.0, 336432.0, 348168.0, 386310.0, 424452.0],
@@ -44,11 +46,13 @@ def get_interpolated_price(area, class_idx):
             return v_alt + (area - a_alt) * (v_ust - v_alt) / (a_ust - a_alt)
     return 0
 
-# --- GİRDİLER ---
+# --- GİRDİLER (Telefon Uyumlu) ---
 area = st.number_input("İnşaat Alanı (m²)", value=3333, step=1)
 cls = st.selectbox("Yapı Sınıfı", CLASSES, index=2)
-tips = st.number_input("Bina Adedi", value=1, min_value=1)
-discount_pct = st.number_input("İndirim Yüzdesi (%)", value=0, min_value=0, max_value=100)
+tips = st.number_input("Bina Adedi (Boş = 1)", value=1, min_value=1)
+
+# İstediğiniz sağa sola kaydırmalı indirim çubuğu (Slider)
+discount_pct = st.slider("İndirim Yüzdesi (%)", min_value=0, max_value=100, value=0)
 
 if st.button("HESAPLA", use_container_width=True):
     table_price = get_interpolated_price(area, CLASSES.index(cls))
@@ -60,21 +64,23 @@ if st.button("HESAPLA", use_container_width=True):
     pay_ratio = (100 - discount_pct) / 100.0
 
     st.divider()
-    col_a, col_b = st.columns(2)
-    with col_a:
-        st.write("### 📄 Ruhsat Bedeli")
-        st.metric("Brüt (%50)", f"{round(r_brut):,} TL")
-    with col_b:
-        st.write("### 🏗️ Uygulama Bedeli")
-        st.metric("Brüt (%100)", f"{round(u_brut):,} TL")
-
-    # İndirimli Sonuçlar
-    st.markdown("---")
     
+    # Brüt Sonuçlar
+    c_left, c_right = st.columns(2)
+    with c_left:
+        st.metric("Ruhsat Brüt (%50)", f"{round(r_brut):,} TL")
+    with c_right:
+        st.metric("Uygulama Brüt (%100)", f"{round(u_brut):,} TL")
+
+    # İndirimli Bloklar
+    st.markdown("### 🔹 İndirimli Sonuçlar (KDV Dahil)")
+    
+    # Ruhsat Bloğu
     matrah_r = round(r_brut * pay_ratio)
     kdv_r = round(matrah_r * 0.2)
-    st.info(f"**İndirimli Ruhsat + KDV**\n\nMatrah: {matrah_r:,} TL | KDV: {kdv_r:,} TL\n\n**TOPLAM: {matrah_r + kdv_r:,} TL**")
+    st.info(f"**RUHSAT PROJE BEDELİ**\n\nMatrah: {matrah_r:,} TL  |  KDV: {kdv_r:,} TL\n\n**TOPLAM: {matrah_r + kdv_r:,} TL**")
 
+    # Uygulama Bloğu
     matrah_u = round(u_brut * pay_ratio)
     kdv_u = round(matrah_u * 0.2)
-    st.error(f"**İndirimli Uygulama + KDV**\n\nMatrah: {matrah_u:,} TL | KDV: {kdv_u:,} TL\n\n**TOPLAM: {matrah_u + kdv_u:,} TL**")
+    st.error(f"**UYGULAMA PROJE BEDELİ**\n\nMatrah: {matrah_u:,} TL  |  KDV: {kdv_u:,} TL\n\n**TOPLAM: {matrah_u + kdv_u:,} TL**")
