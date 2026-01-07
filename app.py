@@ -1,7 +1,7 @@
 import streamlit as st
 
 # --- LOGO VE SAYFA AYARLARI ---
-LOGO_URL = "https://i.ibb.co/2YFYh4t4/mmo-logo-mini-1.png"
+LOGO_URL = "https://i.ibb.co/DPSdttSv/mmo-logo-mini-1.png"
 
 st.set_page_config(
     page_title="MMO 2025 Hesapla", 
