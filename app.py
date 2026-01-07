@@ -45,7 +45,7 @@ def get_interpolated_price(area, class_idx):
     return 0
 
 # --- GİRDİLER ---
-area = st.number_input("İnşaat Alanı (m²)", value=3333, step=1)
+area = st.number_input("İnşaat Alanı (m²)", value=1000, step=1)
 cls = st.selectbox("Yapı Sınıfı", CLASSES, index=2)
 tips = st.number_input("Bina Adedi (Boş = 1)", value=1, min_value=1)
 discount_pct = st.slider("İndirim Yüzdesi (%)", min_value=0, max_value=100, value=0)
