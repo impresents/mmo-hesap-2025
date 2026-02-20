@@ -10,10 +10,12 @@ st.set_page_config(
 )
 
 # --- ÜST BÖLÜM: LOGO VE BAŞLIK ---
-# Sütun oranları [2, 1, 2] yapılarak orta sütun daraltıldı. Böylece logo standart boyutta kalacak.
-c1, c2, c3 = st.columns([2, 1, 2])
-with c2:
-    st.image(LOGO_URL, use_container_width=True)
+
+# Logonun sabit genişliği (Örn: 150 piksel. İstediğiniz gibi değiştirebilirsiniz)
+st.markdown(
+    f"<div style='text-align: center;'><img src='{LOGO_URL}' width='150'></div>", 
+    unsafe_allow_html=True
+)
 
 st.markdown("<h2 style='text-align: center; color: #333;'>MMO 2026 Proje Hesaplama</h2>", unsafe_allow_html=True)
 st.divider()
